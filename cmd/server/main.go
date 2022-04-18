@@ -5,7 +5,7 @@ import "github.com/gin-gonic/gin"
 func main() {
 	r := gin.Default()
 	r.POST("/appointments", func(c *gin.Context) {
-		c.JSON(200, gin.H{
+		c.JSON(201, gin.H{
 			"message": "Your appointment is booked.",
 		})
 	})
