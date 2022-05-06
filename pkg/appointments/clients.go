@@ -1,6 +1,9 @@
 package appointments
 
 import (
+  "fmt"
+
+  "github.com/egec-org/bookem/internal/db"
   "github.com/gin-gonic/gin"
   "go.uber.org/zap"
 )
@@ -27,6 +30,10 @@ func GetAppointmentById(c *gin.Context) {
 }
 
 func GetAllAppointments(c *gin.Context) {
+  conn := db.GetDBClient()
+  // TODO remove fmt statement and fetch appts
+  // from DB.
+  fmt.Println(conn)
   zap.S().Info("Appointments fetched.")
   c.JSON(201, gin.H{
     "message": "Here are your appontments: 1/2 2/4",
