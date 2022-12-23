@@ -1,15 +1,16 @@
 package appointments
 
 import (
-  "github.com/gin-gonic/gin"
+	"github.com/egec-org/bookem/pkg/appointments/clients"
+	"github.com/gin-gonic/gin"
 )
 
 func InitHttpHandlers(r *gin.Engine) {
-  r.POST("/appointments", Book)
-  r.DELETE("/appointments", Cancel)
-  r.GET("/appointments", GetAllAppointments)
-  r.GET("/appointments/:id", GetAppointmentById)
-  r.GET("/hairstylists/:id/availability_blocks", GetAvailableTimeslots)
-  r.GET("hairstylists/:id/prices", ListPrices)
-  r.POST("/appointments/confirm", ConfirmAppointment)
+	r.POST("/appointments", clients.Book)
+	r.DELETE("/appointments", clients.Cancel)
+	r.GET("/appointments", clients.GetAllAppointments)
+	r.GET("/appointments/:id", clients.GetAppointmentById)
+	r.GET("/hairstylists/:id/availability_blocks", GetAvailableTimeslots)
+	r.GET("hairstylists/:id/prices", ListPrices)
+	r.POST("/appointments/confirm", ConfirmAppointment)
 }

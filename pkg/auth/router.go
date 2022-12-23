@@ -1,9 +1,9 @@
 package auth
 
 import (
-  "github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin"
 )
 
 func InitHttpHandlers(r *gin.Engine) {
-  r.POST("/access/token", AuthUser)
+	r.POST("/access/token", ValidateUser)
 }
