@@ -20,27 +20,30 @@ type DBConfig struct {
 	Port     string `json:"port"`
 	Password string `json:"password"`
 	Secret   string `json:"secret"`
-	Net      string `json:"net"`
+	Protocol string `json:"protocol"`
 }
 
 func NewClient(config DBConfig) (interface{}, error) {
-	addr := config.Host + ":" + string(config.Port)
+	addr := config.Host + ":" + config.Port
+	fmt.Println(addr)
 
 	cfg := mysql.Config{
-		User:   config.User,
-		Passwd: config.Secret,
-		Addr:   addr,
-		Net:    config.Net,
-		DBName: config.Name,
+		User:                 config.User,
+		Passwd:               config.Secret,
+		Addr:                 addr,
+		Net:                  config.Protocol,
+		DBName:               config.Name,
+		AllowNativePasswords: true,
 	}
+	fmt.Println(cfg)
 	db, err := sqlx.Connect(MYSQL, cfg.FormatDSN())
 	if err != nil {
 		fmt.Println("db not connected")
+		fmt.Println(err)
 		return nil, err
 	}
 	err = db.Ping()
 	if err != nil {
-		fmt.Println("Error pinging")
 		return nil, err
 	}
 	dbConn = db
