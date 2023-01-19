@@ -3,18 +3,6 @@ package clients
 import (
 	"database/sql"
 	"sync"
-
-	"github.com/google/wire"
-)
-
-var ProviderSet wire.ProviderSet = (
-	ProviderHandler,
-	ProvideService,
-	ProvideRepository,
-
-	wire.Bind(new(ClientHandler), new(*handler)),
-	wire.Bind(new(ClientService), new(*service)),
-	wire.Bind(new(ClientRepository), new(*service)),
 )
 
 var (

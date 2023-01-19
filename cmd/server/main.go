@@ -40,15 +40,18 @@ func createApp(
 func main() {
 	appConfigEnvVar := os.Getenv("APP_CONFIG")
 	cache.BasicUsage()
-	var appContainer di.Container
+	//var appContainer di.Container
 	if appConfigEnvVar != "" {
 		appConfig, err := config.ReadConfigPath(appConfigEnvVar)
 		if err != nil {
 			fmt.Println("Error looking for DB config")
 			os.Exit(1)
 		}
-		appContainer = createApp(appConfig)
-		defer appContainer.Delete()
+		fmt.Println(db.NewClient(appConfig.Database))
+
+		//appContainer = createApp(appConfig)
+		//fmt.Print(appContainer.Get("db-client"))
+		//defer appContainer.Delete()
 	} else {
 		fmt.Println("Config path not set.")
 		os.Exit(1)

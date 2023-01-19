@@ -9,31 +9,39 @@ import (
 
 var dbConn *sqlx.DB
 
+const (
+	MYSQL = "mysql"
+)
+
 type DBConfig struct {
-	Host   string
-	Name   string
-	User   string
-	Passwd string
+	Host     string `json:"host"`
+	Name     string `json:"name"`
+	User     string `json:"user"`
+	Port     string `json:"port"`
+	Password string `json:"password"`
+	Secret   string `json:"secret"`
+	Net      string `json:"net"`
 }
 
 func NewClient(config DBConfig) (interface{}, error) {
+	addr := config.Host + ":" + string(config.Port)
+
 	cfg := mysql.Config{
-		User:                 "root",
-		Passwd:               "password",
-		Addr:                 "127.0.0.1:3306",
-		DBName:               config.Name,
-		AllowNativePasswords: true,
+		User:   config.User,
+		Passwd: config.Secret,
+		Addr:   addr,
+		Net:    config.Net,
+		DBName: config.Name,
 	}
-	db, err := sqlx.Connect("mysql", cfg.FormatDSN())
+	db, err := sqlx.Connect(MYSQL, cfg.FormatDSN())
 	if err != nil {
-		return nil, err
 		fmt.Println("db not connected")
-		fmt.Println(err)
+		return nil, err
 	}
 	err = db.Ping()
 	if err != nil {
-		return nil, err
 		fmt.Println("Error pinging")
+		return nil, err
 	}
 	dbConn = db
 	return dbConn, nil

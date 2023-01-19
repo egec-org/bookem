@@ -1,5 +1,7 @@
 [database]
 host = "127.0.0.1"
-user = "root"
-password = "password"
+user = "test"
+secret = "test"
 name = "sample"
+port = "3390"
+net = "tcp"
